@@ -3,6 +3,10 @@ import opengl
 import vectorgraphics
 import oswindow
 
+type
+  Vec2 = object
+    x, y: float
+
 var windows: seq[OsWindow]
 
 proc onFrame(window: OsWindow) =
@@ -17,8 +21,8 @@ proc onFrame(window: OsWindow) =
 
   vg.beginFrame(width, height, 1.0)
   vg.beginPath()
-  vg.rect(50, 50, 200, 200)
-  vg.setFillColor(1, 0, 0, 1)
+  vg.rect(Vec2(x: 50, y: 50), Vec2(x: 200, y: 200))
+  vg.fillColor = (r: 1.0, g: 0.0, b: 0.0, a: 1.0)
   vg.fill()
   vg.endFrame()
 
