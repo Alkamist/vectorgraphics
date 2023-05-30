@@ -1,13 +1,8 @@
 {.experimental: "overloadableEnums".}
 
-import opengl
-# import std/unicode; export unicode
 import ./vectorgraphics/nanovg
 
 type
-  # Vec2 = tuple[x, y: float]
-  # Color = tuple[r, g, b, a: float]
-
   Vec2 = concept v
     v.x is float
     v.y is float
@@ -17,9 +12,6 @@ type
     c.g is float
     c.b is float
     c.a is float
-
-  # Vec2 = auto
-  # Color = auto
 
   Paint* = NVGpaint
 
@@ -98,8 +90,8 @@ proc toNvgEnum(join: LineJoin): cint =
     of Bevel: NVG_BEVEL
     of Miter: NVG_MITER
 
-proc beginFrame*(vg: VectorGraphics, width, height: int, pixelDensity: float) =
-  nvgBeginFrame(vg.ctx, float(width) / pixelDensity, float(height) / pixelDensity, pixelDensity)
+proc beginFrame*(vg: VectorGraphics, width, height: int, scale: float) =
+  nvgBeginFrame(vg.ctx, float(width) / scale, float(height) / scale, scale)
 
 proc endFrame*(vg: VectorGraphics) =
   nvgEndFrame(vg.ctx)
