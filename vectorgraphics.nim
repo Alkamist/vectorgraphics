@@ -113,6 +113,7 @@ proc stroke*(vg: VectorGraphics) = nvgStroke(vg.ctx)
 proc saveState*(vg: VectorGraphics) = nvgSave(vg.ctx)
 proc restoreState*(vg: VectorGraphics) = nvgRestore(vg.ctx)
 proc reset*(vg: VectorGraphics) = nvgReset(vg.ctx)
+proc resetTransform*(vg: VectorGraphics) = nvgResetTransform(vg.ctx)
 proc `pathWinding=`*(vg: VectorGraphics, winding: PathWinding) = nvgPathWinding(vg.ctx, winding.toNvgEnum())
 proc `shapeAntiAlias=`*(vg: VectorGraphics, enabled: bool) = nvgShapeAntiAlias(vg.ctx, cint(enabled))
 proc `strokeColor=`*(vg: VectorGraphics, color: Color) = nvgStrokeColor(vg.ctx, color.toNvgColor)
@@ -152,7 +153,7 @@ proc text*(vg: VectorGraphics, p: Vec2, text: openArray[char]): float {.discarda
 proc textMetrics*(vg: VectorGraphics): tuple[ascender, descender, lineHeight: float32] =
   nvgTextMetrics(vg.ctx, addr(result.ascender), addr(result.descender), addr(result.lineHeight))
 
-proc setTextAlign*(vg: VectorGraphics, x: TextAlignX, y: TextAlignY) =
+proc textAlign*(vg: VectorGraphics, x: TextAlignX, y: TextAlignY) =
   let nvgXValue = case x:
     of Left: NVG_ALIGN_LEFT
     of Center: NVG_ALIGN_CENTER
