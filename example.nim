@@ -22,7 +22,7 @@ for i in 0 ..< 4:
   window.onFrame = proc(window: OsWindow) =
     let (width, height) = window.size
     let vg = cast[VectorGraphics](window.userData)
-    vg.beginFrame(width, height, window.scale)
+    vg.beginFrame(width, height, window.dpi / 96.0)
 
     vg.beginPath()
     vg.rect(Vec2(x: 50, y: 50), Vec2(x: 200, y: 200))

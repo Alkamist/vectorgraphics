@@ -35,16 +35,20 @@ type
     Bevel
     Miter
 
-  TextAlignX* = enum
+  TextAlignmentX* = enum
     Left
     Center
     Right
 
-  TextAlignY* = enum
+  TextAlignmentY* = enum
     Top
     Center
     Bottom
     Baseline
+
+  TextAlignment* = object
+    x*: TextAlignmentX
+    y*: TextAlignmentY
 
   Glyph* = object
     index*: uint64
@@ -153,12 +157,15 @@ proc text*(vg: VectorGraphics, p: Vec2, text: openArray[char]): float {.discarda
 proc textMetrics*(vg: VectorGraphics): tuple[ascender, descender, lineHeight: float32] =
   nvgTextMetrics(vg.ctx, addr(result.ascender), addr(result.descender), addr(result.lineHeight))
 
-proc textAlign*(vg: VectorGraphics, x: TextAlignX, y: TextAlignY) =
-  let nvgXValue = case x:
+proc textAlignment*(x: TextAlignmentX, y: TextAlignmentY): TextAlignment =
+  TextAlignment(x: x, y: y)
+
+proc `textAlignment=`*(vg: VectorGraphics, anchor: TextAlignment) =
+  let nvgXValue = case anchor.x:
     of Left: NVG_ALIGN_LEFT
     of Center: NVG_ALIGN_CENTER
     of Right: NVG_ALIGN_RIGHT
-  let nvgYValue = case y:
+  let nvgYValue = case anchor.y:
     of Top: NVG_ALIGN_TOP
     of Center: NVG_ALIGN_MIDDLE
     of Bottom: NVG_ALIGN_BOTTOM
